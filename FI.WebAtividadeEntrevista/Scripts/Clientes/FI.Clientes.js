@@ -2,11 +2,13 @@
 $(document).ready(function () {
     $('#formCadastro').submit(function (e) {
         e.preventDefault();
+
         $.ajax({
             url: urlPost,
             method: "POST",
             data: {
                 "NOME": $(this).find("#Nome").val(),
+                "CPF": $(this).find("#CPF").val(),
                 "CEP": $(this).find("#CEP").val(),
                 "Email": $(this).find("#Email").val(),
                 "Sobrenome": $(this).find("#Sobrenome").val(),
@@ -27,6 +29,7 @@ $(document).ready(function () {
             function (r) {
                 ModalDialog("Sucesso!", r)
                 $("#formCadastro")[0].reset();
+                $('#CPF').trigger('input');
             }
         });
     })

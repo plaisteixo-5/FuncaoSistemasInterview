@@ -38,10 +38,15 @@ namespace WebAtividadeEntrevista.Controllers
             }
             else
             {
-                
+                if (bo.VerificarExistencia(model.CPF))
+                {
+                    return Json("CPF já cadastrado.");
+                }
+
                 model.Id = bo.Incluir(new Cliente()
                 {                    
                     CEP = model.CEP,
+                    CPF = model.CPF,
                     Cidade = model.Cidade,
                     Email = model.Email,
                     Estado = model.Estado,
@@ -73,6 +78,16 @@ namespace WebAtividadeEntrevista.Controllers
             }
             else
             {
+                Cliente cliente = bo.Consultar(model.Id);
+
+                if(cliente.CPF != model.CPF)
+                {
+                    if (bo.VerificarExistencia(model.CPF))
+                    {
+                        return Json("CPF já cadastrado.");
+                    }
+                }
+                
                 bo.Alterar(new Cliente()
                 {
                     Id = model.Id,
@@ -84,6 +99,7 @@ namespace WebAtividadeEntrevista.Controllers
                     Nacionalidade = model.Nacionalidade,
                     Nome = model.Nome,
                     Sobrenome = model.Sobrenome,
+                    CPF = model.CPF,
                     Telefone = model.Telefone
                 });
                                
@@ -111,6 +127,7 @@ namespace WebAtividadeEntrevista.Controllers
                     Nacionalidade = cliente.Nacionalidade,
                     Nome = cliente.Nome,
                     Sobrenome = cliente.Sobrenome,
+                    CPF = cliente.CPF,
                     Telefone = cliente.Telefone
                 };
 
